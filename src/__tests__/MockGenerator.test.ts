@@ -1,10 +1,14 @@
 import Ajv from 'ajv'
 
-import buildMock from '../mockGenerator'
+import MockGenerator from '../MockGenerator'
 import { simpleBlocks, aggregatedBlocks } from '../constants'
 
 describe('test', () => {
     const validator = new Ajv()
+    let generator: any = null
+    beforeEach(() => {
+        generator = new MockGenerator()
+    })
     describe('Single block schemas', () => {
         it.each(Object.values(simpleBlocks))('Single %s key', type => {
             const schema: any = {
@@ -12,7 +16,7 @@ describe('test', () => {
             }
 
             const validate = validator.compile(schema)
-            const generatedMock = buildMock(schema)
+            const generatedMock = generator.buildMock(schema)
             validate(generatedMock)
 
             expect(validate.errors).toBeNull()
@@ -31,7 +35,7 @@ describe('test', () => {
             }
 
             const validate = validator.compile(schema)
-            const generatedMock = buildMock(schema)
+            const generatedMock = generator.buildMock(schema)
             validate(generatedMock)
             expect(validate.errors).toBeNull()
         })
@@ -52,7 +56,7 @@ describe('test', () => {
                     }
 
                     const validate = validator.compile(schema)
-                    const generatedMock = buildMock(schema)
+                    const generatedMock = generator.buildMock(schema)
                     validate(generatedMock)
 
                     expect(validate.errors).toBeNull()
@@ -72,7 +76,7 @@ describe('test', () => {
                     }
 
                     const validate = validator.compile(schema)
-                    const generatedMock = buildMock(schema)
+                    const generatedMock = generator.buildMock(schema)
                     validate(generatedMock)
                     expect(validate.errors).toBeNull()
                 },
