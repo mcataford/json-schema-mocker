@@ -35,7 +35,7 @@ function buildIntegerBlock(properties: any = {}) {
     const { maximum = 100, minimum = 0 } = properties
     return Math.floor(Math.random() * Math.floor(maximum)) + minimum
 }
-
+// eslint-disable-next-line no-unused-vars
 function buildStringBlock(properties: any) {
     return uuid.v4()
 }
@@ -44,7 +44,7 @@ function buildNumberBlock(properties: any = {}) {
     const { maximum = 100, minimum = 0 } = properties
     return Math.random() * maximum + minimum
 }
-
+// eslint-disable-next-line no-unused-vars
 function buildBooleanBlock(properties: any = {}) {
     return Math.random() > 0.5 ? true : false
 }
