@@ -23,6 +23,7 @@ describe('My cool testsuite', () => {
         // Use your mock data knowing it matches your schema!
     })
 })
+```
 
 ## Feature roadmap
 
