@@ -17,6 +17,24 @@ describe('test', () => {
 
             expect(validate.errors).toBeNull()
         })
+
+        it.each`
+            type                    | enum
+            ${simpleBlocks.INTEGER} | ${[1, 2, 3]}
+            ${simpleBlocks.STRING}  | ${['1', '2', '3']}
+            ${simpleBlocks.BOOLEAN} | ${[true, false]}
+            ${simpleBlocks.NUMBER}  | ${[1.1, 2.2, 3.3]}
+        `('Single $type with enum as $enum', (parameters: any) => {
+            const schema: any = {
+                type: parameters.type,
+                enum: parameters.enum,
+            }
+
+            const validate = validator.compile(schema)
+            const generatedMock = buildMock(schema)
+            validate(generatedMock)
+            expect(validate.errors).toBeNull()
+        })
     })
 
     describe('Single nested block schemas', () => {
