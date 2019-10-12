@@ -1,2 +1,2 @@
-import buildMock from './mockGenerator'
-export default buildMock
+import MockGenerator from './MockGenerator'
+export default MockGenerator
