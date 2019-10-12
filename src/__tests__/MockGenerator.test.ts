@@ -99,5 +99,20 @@ describe('MockGenerator', () => {
                 generateAndValidateMock(schema, validator, generator)
             },
         )
+        it.each(Object.values(simpleBlocks))('Object -> Array -> %s', type => {
+            const schema: any = {
+                type: aggregatedBlocks.OBJECT,
+                properties: {
+                    innerArray: {
+                        type: aggregatedBlocks.ARRAY,
+                        items: {
+                            type,
+                        },
+                    },
+                },
+            }
+
+            generateAndValidateMock(schema, validator, generator)
+        })
     })
 })
