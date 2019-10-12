@@ -73,6 +73,13 @@ describe('MockGenerator', () => {
                     }
 
                     generateAndValidateMock(schema, validator, generator)
+
+                    const schema2: any = {
+                        type: aggregatedBlocks.ARRAY,
+                        items: [{ type }],
+                    }
+
+                    generateAndValidateMock(schema2, validator, generator)
                 },
             )
         })
