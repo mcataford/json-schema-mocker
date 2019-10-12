@@ -1,6 +1,6 @@
 import Ajv from 'ajv'
 
-import { buildMock } from '../'
+import buildMock from '../mockGenerator'
 import { simpleBlocks, aggregatedBlocks } from '../constants'
 
 describe('test', () => {
