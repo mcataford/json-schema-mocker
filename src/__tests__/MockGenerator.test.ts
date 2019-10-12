@@ -3,7 +3,18 @@ import Ajv from 'ajv'
 import MockGenerator from '../MockGenerator'
 import { simpleBlocks, aggregatedBlocks } from '../constants'
 
-describe('test', () => {
+function generateAndValidateMock(
+    schema: any,
+    validator: any,
+    generator: MockGenerator,
+): void {
+    const validate = validator.compile(schema)
+    const generatedMock = generator.buildMock(schema)
+    validate(generatedMock)
+    expect(validate.errors).toBeNull()
+}
+
+describe('MockGenerator', () => {
     const validator = new Ajv()
     let generator: any = null
     beforeEach(() => {
@@ -14,12 +25,7 @@ describe('test', () => {
             const schema: any = {
                 type,
             }
-
-            const validate = validator.compile(schema)
-            const generatedMock = generator.buildMock(schema)
-            validate(generatedMock)
-
-            expect(validate.errors).toBeNull()
+            generateAndValidateMock(schema, validator, generator)
         })
 
         it.each`
@@ -33,11 +39,7 @@ describe('test', () => {
                 type: parameters.type,
                 enum: parameters.enum,
             }
-
-            const validate = validator.compile(schema)
-            const generatedMock = generator.buildMock(schema)
-            validate(generatedMock)
-            expect(validate.errors).toBeNull()
+            generateAndValidateMock(schema, validator, generator)
         })
     })
 
@@ -54,12 +56,7 @@ describe('test', () => {
                             },
                         },
                     }
-
-                    const validate = validator.compile(schema)
-                    const generatedMock = generator.buildMock(schema)
-                    validate(generatedMock)
-
-                    expect(validate.errors).toBeNull()
+                    generateAndValidateMock(schema, validator, generator)
                 },
             )
         })
@@ -75,12 +72,32 @@ describe('test', () => {
                         },
                     }
 
-                    const validate = validator.compile(schema)
-                    const generatedMock = generator.buildMock(schema)
-                    validate(generatedMock)
-                    expect(validate.errors).toBeNull()
+                    generateAndValidateMock(schema, validator, generator)
                 },
             )
         })
+    })
+
+    describe('3+ depth scenarios', () => {
+        it.each(Object.values(simpleBlocks))(
+            'Nested objects with an inner %s',
+            type => {
+                const schema: any = {
+                    type: aggregatedBlocks.OBJECT,
+                    properties: {
+                        innerObject: {
+                            type: aggregatedBlocks.OBJECT,
+                            properties: {
+                                innerSimpleBlock: {
+                                    type,
+                                },
+                            },
+                        },
+                    },
+                }
+
+                generateAndValidateMock(schema, validator, generator)
+            },
+        )
     })
 })
