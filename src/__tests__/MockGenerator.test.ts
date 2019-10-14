@@ -120,6 +120,26 @@ describe('MockGenerator', () => {
                     generateAndValidateMock(schema2, validator, generator)
                 },
             )
+
+            it.each`
+                minimumLength | maximumLength
+                ${undefined}  | ${10}
+                ${10}         | ${undefined}
+                ${undefined}  | ${undefined}
+                ${10}         | ${120}
+            `(
+                'minItems and maxItems bound the size of the array (minItems = $minimumLength, maxItems = $maximumLength)',
+                (params: any) => {
+                    const schema: any = {
+                        type: aggregatedBlocks.ARRAY,
+                        items: { type: simpleBlocks.INTEGER },
+                        minItems: params.minimumLength,
+                        maxItems: params.maximumLength,
+                    }
+
+                    generateAndValidateMock(schema, validator, generator)
+                },
+            )
         })
     })
 
