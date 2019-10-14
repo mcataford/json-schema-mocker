@@ -49,7 +49,8 @@ describe('MockGenerator', () => {
             it.each([simpleBlocks.INTEGER, simpleBlocks.NUMBER])(
                 'multipleOf ensures that the generated %s is a multiple of the specified value',
                 type => {
-                    const randomizedMultiple = Math.floor(Math.random() * 100)
+                    const randomizedMultiple =
+                        Math.floor(Math.random() * 100) + 1
                     const schema: any = {
                         type,
                         multipleOf: randomizedMultiple,
