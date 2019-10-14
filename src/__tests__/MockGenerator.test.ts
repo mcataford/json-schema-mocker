@@ -11,6 +11,9 @@ function generateAndValidateMock(
     const validate = validator.compile(schema)
     const generatedMock = generator.buildMock(schema)
     validate(generatedMock)
+
+    if (validate.errors) console.info('GENERATED MOCK:', generatedMock)
+
     expect(validate.errors).toBeNull()
 }
 
@@ -40,6 +43,21 @@ describe('MockGenerator', () => {
                 enum: parameters.enum,
             }
             generateAndValidateMock(schema, validator, generator)
+        })
+
+        describe('Numeric types', () => {
+            it.each([simpleBlocks.INTEGER, simpleBlocks.NUMBER])(
+                'multipleOf ensures that the generated %s is a multiple of the specified value',
+                type => {
+                    const randomizedMultiple = Math.floor(Math.random() * 100)
+                    const schema: any = {
+                        type,
+                        multipleOf: randomizedMultiple,
+                    }
+
+                    generateAndValidateMock(schema, validator, generator)
+                },
+            )
         })
     })
 
