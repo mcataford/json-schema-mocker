@@ -2,11 +2,13 @@
 
 ## Overview & motivation
 
-Hardcoding mock data is the devil's plaything. As your code evolves and grows, it's easy for its test suites to drift away from the real state of the your application. All it takes it forgetting to update your mock data alongside your schemas.
+Hardcoding mock data is the devil's plaything. As your code evolves and grows, it's easy for its test suites to drift away from the real state of the your application. All it takes is forgetting to update your mock data alongside your schemas and suddenly, your tests are all invalid.
 
-This package removes the need for hardcoded mock data by generating schema-compliant mock data on the fly based on your JSON Schema.
+This package removes the need for hardcoded mock data by generating schema-compliant mock data on the fly based on your JSON Schema. This way, you can focus on what the mock data should __be like__ instead of __what it is__.
 
 ## Installing
+
+_TBD_
 
 ## Usage
 
