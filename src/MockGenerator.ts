@@ -99,13 +99,20 @@ class MockBuilder {
     }
 
     buildArrayBlock(root: any): any {
-        const { items } = root
+        const { items, minItems, maxItems } = root
         const { type } = items
+
+        const maximumLength = maxItems ? maxItems : 100
+        const minimumLength = minItems ? minItems : 0
+        const chosenLength =
+            Math.floor(Math.random() * maximumLength) + minimumLength
 
         if (items.constructor.name === 'Array') {
             return items.map((item: any) => this.buildMock(item))
         }
-        return [this.buildMock({ type } as any)]
+        return Array(chosenLength)
+            .fill(0)
+            .map(_ => this.buildMock({ type } as any))
     }
 }
 function getRandomAllowedValue(allowedValues: any[] = []) {
