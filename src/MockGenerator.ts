@@ -22,7 +22,7 @@ class MockBuilder {
             case blockTypes.BOOLEAN:
                 return this.buildBooleanBlock(properties, allowedValues)
             case blockTypes.ARRAY:
-                return this.buildArrayBlock(items)
+                return this.buildArrayBlock(root)
             default:
                 return null
         }
@@ -98,7 +98,8 @@ class MockBuilder {
         return Math.random() > 0.5 ? true : false
     }
 
-    buildArrayBlock(items: any = {}): any {
+    buildArrayBlock(root: any): any {
+        const { items } = root
         const { type } = items
 
         if (items.constructor.name === 'Array') {
