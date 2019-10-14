@@ -36,9 +36,9 @@ describe('My cool testsuite', () => {
 - [x] `type`
 - [x] `maximum`
 - [x] `minimum`
-- [ ] `multipleOf`
-- [ ] `exclusiveMinimum`
-- [ ] `exclusiveMaximum`
+- [x] `multipleOf`
+- [x] `exclusiveMinimum` (Extrema are always exclusive)
+- [x] `exclusiveMaximum` (Extrema are always exclusive)
 
 #### Object
 

@@ -14,11 +14,11 @@ class MockBuilder {
             case blockTypes.OBJECT:
                 return this.buildObjectBlock(properties)
             case blockTypes.INTEGER:
-                return this.buildIntegerBlock(properties, allowedValues)
+                return this.buildNumericalBlock(root)
             case blockTypes.STRING:
                 return this.buildStringBlock(properties, allowedValues)
             case blockTypes.NUMBER:
-                return this.buildNumberBlock(properties, allowedValues)
+                return this.buildNumericalBlock(root)
             case blockTypes.BOOLEAN:
                 return this.buildBooleanBlock(properties, allowedValues)
             case blockTypes.ARRAY:
@@ -36,16 +36,39 @@ class MockBuilder {
         }, {})
     }
 
-    buildIntegerBlock(
-        properties: any = {},
-        allowedValues: number[] = [],
-    ): number {
-        if (allowedValues.length > 0) {
+    buildNumericalBlock(root: any): number {
+        const allowedMaximum =
+            root.type === blockTypes.INTEGER
+                ? Number.MAX_SAFE_INTEGER
+                : Number.MAX_VALUE
+        const allowedMinimum =
+            root.type === blockTypes.INTEGER
+                ? Number.MIN_SAFE_INTEGER
+                : Number.MIN_VALUE
+        const {
+            type,
+            enum: allowedValues,
+            maximum = allowedMaximum,
+            minimum = allowedMinimum,
+            multipleOf,
+        } = root
+        if (allowedValues && allowedValues.length > 0) {
             return getRandomAllowedValue(allowedValues)
         }
 
-        const { maximum = 100, minimum = 0 } = properties
-        return Math.floor(Math.random() * Math.floor(maximum)) + minimum
+        if (multipleOf) {
+            const multipleMaximum = Math.floor(
+                Math.min(Number.MAX_SAFE_INTEGER, maximum),
+            )
+            return (
+                Math.floor((Math.random() * multipleMaximum) / multipleOf) *
+                multipleOf
+            )
+        }
+
+        return type === blockTypes.INTEGER
+            ? Math.floor(Math.random() * Math.floor(maximum)) + minimum
+            : Math.random() * maximum + minimum
     }
     buildStringBlock(properties: any = {}, allowedValues: string[] = []): any {
         if (allowedValues.length > 0) {
