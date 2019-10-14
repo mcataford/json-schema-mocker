@@ -4,7 +4,7 @@
   "homepage": "",
   "bugs": {
     "url": "",
-    "email": "c.marcandre@gmail.com"  
+    "email": "c.marcandre@gmail.com"
   },
   "author": {
     "name": "Marc Cataford",
@@ -18,8 +18,17 @@
   "version": "1.0.0",
   "main": "lib/index.js",
   "license": "MIT",
-  "keywords": ["schema", "mock", "mock data", "json schema", "test", "test data"],
-  "files": ["lib/*"],
+  "keywords": [
+    "schema",
+    "mock",
+    "mock data",
+    "json schema",
+    "test",
+    "test data"
+  ],
+  "files": [
+    "lib/*"
+  ],
   "scripts": {
     "compile": "tsc",
     "test": "jest",
@@ -41,13 +50,14 @@
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
+    "semantic-release": "^15.13.24",
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.4"
   },
   "dependencies": {},
   "husky": {
     "hooks": {
-        "pre-commit": "yarn lint && yarn test"
+      "pre-commit": "yarn lint && yarn test"
     }
   }
 }
