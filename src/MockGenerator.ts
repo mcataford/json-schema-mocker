@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import uuid from 'uuid'
+import crypto from 'crypto'
 
 import { blockTypes } from './constants'
 
@@ -16,7 +16,7 @@ class MockBuilder {
             case blockTypes.INTEGER:
                 return this.buildNumericalBlock(root)
             case blockTypes.STRING:
-                return this.buildStringBlock(properties, allowedValues)
+                return this.buildStringBlock(root)
             case blockTypes.NUMBER:
                 return this.buildNumericalBlock(root)
             case blockTypes.BOOLEAN:
@@ -70,25 +70,23 @@ class MockBuilder {
             ? Math.floor(Math.random() * Math.floor(maximum)) + minimum
             : Math.random() * maximum + minimum
     }
-    buildStringBlock(properties: any = {}, allowedValues: string[] = []): any {
-        if (allowedValues.length > 0) {
+    buildStringBlock(root: any): any {
+        const { properties, enum: allowedValues, minLength, maxLength } = root
+
+        const minimumLength = minLength ? minLength : 0
+        const maximumLength = maxLength ? maxLength : 100
+        const chosenLength =
+            Math.floor(Math.random() * maximumLength) + minimumLength
+        if (allowedValues && allowedValues.length > 0) {
             return getRandomAllowedValue(allowedValues)
         }
 
-        return uuid.v4()
+        return crypto
+            .randomBytes(chosenLength)
+            .toString('hex')
+            .substring(0, chosenLength)
     }
 
-    buildNumberBlock(
-        properties: any = {},
-        allowedValues: string[] = [],
-    ): number {
-        if (allowedValues.length > 0) {
-            return getRandomAllowedValue(allowedValues)
-        }
-
-        const { maximum = 100, minimum = 0 } = properties
-        return Math.random() * maximum + minimum
-    }
     buildBooleanBlock(
         properties: any = {},
         allowedValues: boolean[] = [],

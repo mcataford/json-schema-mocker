@@ -27,9 +27,7 @@
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.4"
   },
-  "dependencies": {
-    "uuid": "^3.3.3"
-  },
+  "dependencies": {},
   "husky": {
     "hooks": {
         "pre-commit": "yarn lint && yarn test"
