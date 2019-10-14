@@ -16,7 +16,7 @@ class MockBuilder {
             case blockTypes.INTEGER:
                 return this.buildNumericalBlock(root)
             case blockTypes.STRING:
-                return this.buildStringBlock(properties, allowedValues)
+                return this.buildStringBlock(root)
             case blockTypes.NUMBER:
                 return this.buildNumericalBlock(root)
             case blockTypes.BOOLEAN:
@@ -70,8 +70,10 @@ class MockBuilder {
             ? Math.floor(Math.random() * Math.floor(maximum)) + minimum
             : Math.random() * maximum + minimum
     }
-    buildStringBlock(properties: any = {}, allowedValues: string[] = []): any {
-        if (allowedValues.length > 0) {
+    buildStringBlock(root: any): any {
+        const { properties, enum: allowedValues } = root
+
+        if (allowedValues && allowedValues.length > 0) {
             return getRandomAllowedValue(allowedValues)
         }
 
