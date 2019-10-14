@@ -1,8 +1,25 @@
 {
   "name": "schema-mocks",
+  "description": "Never hardcode mock data again, generate it from schemas instead!",
+  "homepage": "",
+  "bugs": {
+    "url": "",
+    "email": "c.marcandre@gmail.com"  
+  },
+  "author": {
+    "name": "Marc Cataford",
+    "email": "c.marcandre@gmail.com",
+    "url": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "lib/index.js",
   "license": "MIT",
+  "keywords": ["schema", "mock", "mock data", "json schema", "test", "test data"],
+  "files": ["lib/*"],
   "scripts": {
     "compile": "tsc",
     "test": "jest",
