@@ -1,9 +1,9 @@
 {
   "name": "json-schema-mocker",
   "description": "Never hardcode mock data again, generate it from schemas instead!",
-  "homepage": "",
+  "homepage": "https://github.com/mcataford/json-schema-mocker#readme",
   "bugs": {
-    "url": "",
+    "url": "https://github.com/mcataford/json-schema-mocker/issues",
     "email": "c.marcandre@gmail.com"
   },
   "author": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/mcataford/json-schema-mocker.git"
   },
   "version": "1.0.0",
   "main": "lib/index.js",
@@ -34,7 +34,8 @@
     "compile": "tsc",
     "test": "jest",
     "lint": "eslint src/**/*.ts src/*.ts",
-    "lint:fix": "eslint src/**/* src/*.ts --fix"
+    "lint:fix": "eslint src/**/* src/*.ts --fix",
+    "release": "semantic-release"
   },
   "devDependencies": {
     "@tophat/eslint-config": "^0.1.4",
