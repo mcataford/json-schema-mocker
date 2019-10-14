@@ -105,7 +105,8 @@ class MockBuilder {
         const maximumLength = maxItems ? maxItems : 100
         const minimumLength = minItems ? minItems : 0
         const chosenLength =
-            Math.floor(Math.random() * maximumLength) + minimumLength
+            Math.floor(Math.random() * (maximumLength - minimumLength + 1)) +
+            minimumLength
 
         if (items.constructor.name === 'Array') {
             return items.map((item: any) => this.buildMock(item))
