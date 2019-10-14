@@ -79,6 +79,10 @@ class MockBuilder {
 
     buildArrayBlock(items: any = {}): any {
         const { type } = items
+
+        if (items.constructor.name === 'Array') {
+            return items.map((item: any) => this.buildMock(item))
+        }
         return [this.buildMock({ type } as any)]
     }
 }
