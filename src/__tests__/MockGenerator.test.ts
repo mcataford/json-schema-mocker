@@ -59,6 +59,26 @@ describe('MockGenerator', () => {
                 },
             )
         })
+
+        describe('String type', () => {
+            it.each`
+                maximumLength | minimumLength
+                ${1}          | ${0}
+                ${undefined}  | ${10}
+                ${10}         | ${undefined}
+            `(
+                'chooses a string with the correct length with minLength = $minimumLength and maxLength = $maximumLength',
+                (params: any) => {
+                    const schema: any = {
+                        type: simpleBlocks.STRING,
+                        minLength: params.minimumLength,
+                        maxLength: params.maximumLength,
+                    }
+
+                    generateAndValidateMock(schema, validator, generator)
+                },
+            )
+        })
     })
 
     describe('Single nested block schemas', () => {
