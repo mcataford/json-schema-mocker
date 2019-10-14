@@ -1,14 +1,42 @@
 {
-  "name": "schema-mocks",
+  "name": "json-schema-mocker",
+  "description": "Never hardcode mock data again, generate it from schemas instead!",
+  "homepage": "https://github.com/mcataford/json-schema-mocker#readme",
+  "bugs": {
+    "url": "https://github.com/mcataford/json-schema-mocker/issues",
+    "email": "c.marcandre@gmail.com"
+  },
+  "author": {
+    "name": "Marc Cataford",
+    "email": "c.marcandre@gmail.com",
+    "url": "https://mcataford.github.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcataford/json-schema-mocker.git"
+  },
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "lib/index.js",
   "license": "MIT",
+  "keywords": [
+    "schema",
+    "mock",
+    "mock data",
+    "mocker",
+    "json schema",
+    "test",
+    "test data"
+  ],
+  "files": [
+    "lib/*"
+  ],
   "scripts": {
     "install:clean": "rm -rf node_modules && yarn",
     "compile": "tsc",
     "test": "jest",
     "lint": "eslint src/**/*.ts src/*.ts",
-    "lint:fix": "eslint src/**/* src/*.ts --fix"
+    "lint:fix": "eslint src/**/* src/*.ts --fix",
+    "release": "npx semantic-release"
   },
   "devDependencies": {
     "@tophat/eslint-config": "^0.1.4",
@@ -25,13 +53,14 @@
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
+    "semantic-release": "^15.13.24",
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.4"
   },
   "dependencies": {},
   "husky": {
     "hooks": {
-        "pre-commit": "yarn lint && yarn test"
+      "pre-commit": "yarn lint && yarn test"
     }
   }
 }

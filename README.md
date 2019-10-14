@@ -1,20 +1,28 @@
-# schema-mockdata
+# json-schema-mocker
 
 ## Overview & motivation
 
 Hardcoding mock data is the devil's plaything. As your code evolves and grows, it's easy for its test suites to drift away from the real state of the your application. All it takes is forgetting to update your mock data alongside your schemas and suddenly, your tests are all invalid.
 
-This package removes the need for hardcoded mock data by generating schema-compliant mock data on the fly based on your JSON Schema. This way, you can focus on what the mock data should __be like__ instead of __what it is__.
+`json-schema-mocker` removes the need for hardcoded mock data by generating schema-compliant mock data on the fly based on your JSON Schema. This way, you can focus on what the mock data should __be like__ instead of __what it is__.
 
 ## Installing
 
-_TBD_
+```
+yarn add json-schema-mocker -D
+```
+
+or
+
+```
+npm install json-schema-mocker --save-dev
+```
 
 ## Usage
 
 ```
 // Adjust the import for the fact that this isn't yet published on NPM.
-import MockGenerator from 'schema-mockdata'
+import MockGenerator from 'json-schema-mocker'
 
 describe('My cool testsuite', () => {
     const myGenerator = new MockGenerator()
