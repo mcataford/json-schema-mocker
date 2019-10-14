@@ -73,6 +73,6 @@ describe('My cool testsuite', () => {
 
 - [x] `type`
 - [ ] `pattern`
-- [ ] `maxLength`
-- [ ] `minLength`
+- [x] `maxLength`
+- [x] `minLength`
 - [ ] `format`
