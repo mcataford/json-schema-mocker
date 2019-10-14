@@ -56,9 +56,9 @@ describe('My cool testsuite', () => {
 
 - [x] `type`
 - [x] `items`
-- [ ] `items` (tuple validation)
-- [ ] `minItems`
-- [ ] `maxItems`
+- [x] `items` (tuple validation)
+- [x] `minItems`
+- [x] `maxItems`
 - [ ] `uniqueItems`
 
 #### Boolean
