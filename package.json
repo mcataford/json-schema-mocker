@@ -35,7 +35,7 @@
     "test": "jest",
     "lint": "eslint src/**/*.ts src/*.ts",
     "lint:fix": "eslint src/**/* src/*.ts --fix",
-    "release": "semantic-release"
+    "release": "npx semantic-release"
   },
   "devDependencies": {
     "@tophat/eslint-config": "^0.1.4",
