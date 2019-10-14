@@ -8,7 +8,15 @@ Hardcoding mock data is the devil's plaything. As your code evolves and grows, i
 
 ## Installing
 
-_TBD_
+```
+yarn add json-schema-mocker -D
+```
+
+or
+
+```
+npm install json-schema-mocker --save-dev
+```
 
 ## Usage
 
