@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import uuid from 'uuid'
+import crypto from 'crypto'
 
 import { blockTypes } from './constants'
 
@@ -71,26 +71,22 @@ class MockBuilder {
             : Math.random() * maximum + minimum
     }
     buildStringBlock(root: any): any {
-        const { properties, enum: allowedValues } = root
+        const { properties, enum: allowedValues, minLength, maxLength } = root
 
+        const minimumLength = minLength ? minLength : 0
+        const maximumLength = maxLength ? maxLength : 100
+        const chosenLength =
+            Math.floor(Math.random() * maximumLength) + minimumLength
         if (allowedValues && allowedValues.length > 0) {
             return getRandomAllowedValue(allowedValues)
         }
 
-        return uuid.v4()
+        return crypto
+            .randomBytes(chosenLength)
+            .toString('hex')
+            .substring(0, chosenLength)
     }
 
-    buildNumberBlock(
-        properties: any = {},
-        allowedValues: string[] = [],
-    ): number {
-        if (allowedValues.length > 0) {
-            return getRandomAllowedValue(allowedValues)
-        }
-
-        const { maximum = 100, minimum = 0 } = properties
-        return Math.random() * maximum + minimum
-    }
     buildBooleanBlock(
         properties: any = {},
         allowedValues: boolean[] = [],
