@@ -1,5 +1,5 @@
 {
-  "name": "schema-mocks",
+  "name": "json-schema-mocker",
   "description": "Never hardcode mock data again, generate it from schemas instead!",
   "homepage": "",
   "bugs": {
@@ -22,6 +22,7 @@
     "schema",
     "mock",
     "mock data",
+    "mocker",
     "json schema",
     "test",
     "test data"
