@@ -3,16 +3,17 @@
 import crypto from 'crypto'
 
 import { blockTypes } from './constants'
+import { SchemaBlock } from './typedefs'
 
 class MockBuilder {
     constructor() {}
 
-    buildMock(root: any): any {
-        const { type, properties, items, enum: allowedValues } = root
+    buildMock(root: SchemaBlock): any {
+        const { type } = root
 
         switch (type) {
             case blockTypes.OBJECT:
-                return this.buildObjectBlock(properties)
+                return this.buildObjectBlock(root)
             case blockTypes.INTEGER:
                 return this.buildNumericalBlock(root)
             case blockTypes.STRING:
@@ -20,7 +21,7 @@ class MockBuilder {
             case blockTypes.NUMBER:
                 return this.buildNumericalBlock(root)
             case blockTypes.BOOLEAN:
-                return this.buildBooleanBlock(properties, allowedValues)
+                return this.buildBooleanBlock(root)
             case blockTypes.ARRAY:
                 return this.buildArrayBlock(root)
             default:
@@ -28,7 +29,8 @@ class MockBuilder {
         }
     }
 
-    buildObjectBlock(properties: any): any {
+    buildObjectBlock(root: SchemaBlock): any {
+        const { properties = {} } = root
         return Object.entries(properties).reduce((block: any, entry: any) => {
             const [propertyName, propertySpecs] = entry
             block[propertyName] = this.buildMock(propertySpecs)
@@ -36,7 +38,7 @@ class MockBuilder {
         }, {})
     }
 
-    buildNumericalBlock(root: any): number {
+    buildNumericalBlock(root: SchemaBlock): number {
         const allowedMaximum =
             root.type === blockTypes.INTEGER
                 ? Number.MAX_SAFE_INTEGER
@@ -70,7 +72,7 @@ class MockBuilder {
             ? Math.floor(Math.random() * Math.floor(maximum)) + minimum
             : Math.random() * maximum + minimum
     }
-    buildStringBlock(root: any): any {
+    buildStringBlock(root: SchemaBlock): string {
         const { properties, enum: allowedValues, minLength, maxLength } = root
 
         const minimumLength = minLength ? minLength : 0
@@ -87,18 +89,16 @@ class MockBuilder {
             .substring(0, chosenLength)
     }
 
-    buildBooleanBlock(
-        properties: any = {},
-        allowedValues: boolean[] = [],
-    ): boolean {
-        if (allowedValues.length > 0) {
+    buildBooleanBlock(root: SchemaBlock): boolean {
+        const { enum: allowedValues } = root
+        if (allowedValues && allowedValues.length > 0) {
             return getRandomAllowedValue(allowedValues)
         }
 
         return Math.random() > 0.5 ? true : false
     }
 
-    buildArrayBlock(root: any): any {
+    buildArrayBlock(root: SchemaBlock): any[] {
         const { items, minItems, maxItems } = root
         const { type } = items
 

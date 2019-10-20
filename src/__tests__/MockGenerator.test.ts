@@ -2,9 +2,11 @@ import Ajv from 'ajv'
 
 import MockGenerator from '../MockGenerator'
 import { simpleBlocks, aggregatedBlocks } from '../constants'
+// eslint-disable-next-line no-unused-vars
+import { SchemaBlock } from '../typedefs'
 
 function generateAndValidateMock(
-    schema: any,
+    schema: SchemaBlock,
     validator: any,
     generator: MockGenerator,
 ): void {
@@ -25,7 +27,7 @@ describe('MockGenerator', () => {
     })
     describe('Single block schemas', () => {
         it.each(Object.values(simpleBlocks))('Single %s key', type => {
-            const schema: any = {
+            const schema: SchemaBlock = {
                 type,
             }
             generateAndValidateMock(schema, validator, generator)
@@ -51,7 +53,7 @@ describe('MockGenerator', () => {
                 type => {
                     const randomizedMultiple =
                         Math.floor(Math.random() * 100) + 1
-                    const schema: any = {
+                    const schema: SchemaBlock = {
                         type,
                         multipleOf: randomizedMultiple,
                     }
@@ -70,7 +72,7 @@ describe('MockGenerator', () => {
             `(
                 'chooses a string with the correct length with minLength = $minimumLength and maxLength = $maximumLength',
                 (params: any) => {
-                    const schema: any = {
+                    const schema: SchemaBlock = {
                         type: simpleBlocks.STRING,
                         minLength: params.minimumLength,
                         maxLength: params.maximumLength,
@@ -87,7 +89,7 @@ describe('MockGenerator', () => {
             it.each(Object.values(simpleBlocks))(
                 `Single %s pair in an ${aggregatedBlocks.OBJECT}`,
                 type => {
-                    const schema: any = {
+                    const schema: SchemaBlock = {
                         type: aggregatedBlocks.OBJECT,
                         properties: {
                             'some-property': {
@@ -104,7 +106,7 @@ describe('MockGenerator', () => {
             it.each(Object.values(simpleBlocks))(
                 `Single %s in a ${aggregatedBlocks.ARRAY}`,
                 type => {
-                    const schema: any = {
+                    const schema: SchemaBlock = {
                         type: aggregatedBlocks.ARRAY,
                         items: {
                             type,
@@ -113,7 +115,7 @@ describe('MockGenerator', () => {
 
                     generateAndValidateMock(schema, validator, generator)
 
-                    const schema2: any = {
+                    const schema2: SchemaBlock = {
                         type: aggregatedBlocks.ARRAY,
                         items: [{ type }, { type }],
                     }
@@ -131,7 +133,7 @@ describe('MockGenerator', () => {
             `(
                 'minItems and maxItems bound the size of the array (minItems = $minimumLength, maxItems = $maximumLength)',
                 (params: any) => {
-                    const schema: any = {
+                    const schema: SchemaBlock = {
                         type: aggregatedBlocks.ARRAY,
                         items: { type: simpleBlocks.INTEGER },
                         minItems: params.minimumLength,
@@ -148,7 +150,7 @@ describe('MockGenerator', () => {
         it.each(Object.values(simpleBlocks))(
             'Nested objects with an inner %s',
             type => {
-                const schema: any = {
+                const schema: SchemaBlock = {
                     type: aggregatedBlocks.OBJECT,
                     properties: {
                         innerObject: {
@@ -166,7 +168,7 @@ describe('MockGenerator', () => {
             },
         )
         it.each(Object.values(simpleBlocks))('Object -> Array -> %s', type => {
-            const schema: any = {
+            const schema: SchemaBlock = {
                 type: aggregatedBlocks.OBJECT,
                 properties: {
                     innerArray: {
