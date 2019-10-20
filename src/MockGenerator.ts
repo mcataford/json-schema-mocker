@@ -3,11 +3,12 @@
 import crypto from 'crypto'
 
 import { blockTypes } from './constants'
+import { SchemaBlock } from './typedefs'
 
 class MockBuilder {
     constructor() {}
 
-    buildMock(root: any): any {
+    buildMock(root: SchemaBlock): any {
         const { type, properties, items, enum: allowedValues } = root
 
         switch (type) {
@@ -36,7 +37,7 @@ class MockBuilder {
         }, {})
     }
 
-    buildNumericalBlock(root: any): number {
+    buildNumericalBlock(root: SchemaBlock): number {
         const allowedMaximum =
             root.type === blockTypes.INTEGER
                 ? Number.MAX_SAFE_INTEGER
@@ -70,7 +71,7 @@ class MockBuilder {
             ? Math.floor(Math.random() * Math.floor(maximum)) + minimum
             : Math.random() * maximum + minimum
     }
-    buildStringBlock(root: any): any {
+    buildStringBlock(root: SchemaBlock): string {
         const { properties, enum: allowedValues, minLength, maxLength } = root
 
         const minimumLength = minLength ? minLength : 0
@@ -98,7 +99,7 @@ class MockBuilder {
         return Math.random() > 0.5 ? true : false
     }
 
-    buildArrayBlock(root: any): any {
+    buildArrayBlock(root: SchemaBlock): any[] {
         const { items, minItems, maxItems } = root
         const { type } = items
 
