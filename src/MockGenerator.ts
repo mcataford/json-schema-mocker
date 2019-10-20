@@ -9,11 +9,11 @@ class MockBuilder {
     constructor() {}
 
     buildMock(root: SchemaBlock): any {
-        const { type, properties, items, enum: allowedValues } = root
+        const { type } = root
 
         switch (type) {
             case blockTypes.OBJECT:
-                return this.buildObjectBlock(properties)
+                return this.buildObjectBlock(root)
             case blockTypes.INTEGER:
                 return this.buildNumericalBlock(root)
             case blockTypes.STRING:
@@ -21,7 +21,7 @@ class MockBuilder {
             case blockTypes.NUMBER:
                 return this.buildNumericalBlock(root)
             case blockTypes.BOOLEAN:
-                return this.buildBooleanBlock(properties, allowedValues)
+                return this.buildBooleanBlock(root)
             case blockTypes.ARRAY:
                 return this.buildArrayBlock(root)
             default:
@@ -29,7 +29,8 @@ class MockBuilder {
         }
     }
 
-    buildObjectBlock(properties: any): any {
+    buildObjectBlock(root: SchemaBlock): any {
+        const { properties = {} } = root
         return Object.entries(properties).reduce((block: any, entry: any) => {
             const [propertyName, propertySpecs] = entry
             block[propertyName] = this.buildMock(propertySpecs)
@@ -88,11 +89,9 @@ class MockBuilder {
             .substring(0, chosenLength)
     }
 
-    buildBooleanBlock(
-        properties: any = {},
-        allowedValues: boolean[] = [],
-    ): boolean {
-        if (allowedValues.length > 0) {
+    buildBooleanBlock(root: SchemaBlock): boolean {
+        const { enum: allowedValues } = root
+        if (allowedValues && allowedValues.length > 0) {
             return getRandomAllowedValue(allowedValues)
         }
 
